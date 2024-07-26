@@ -4,7 +4,8 @@
   "description": "test in live",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "linter": "eslint src"
   },
   "author": "Yasmin",
   "license": "ISC",
