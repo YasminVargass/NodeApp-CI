@@ -21,8 +21,5 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Check npm version
-      run: npm -v
-    
-    - name: Check node version
-      run: node -v
+    - name: Run ESLint
+      run: npm init @eslint/config@latest
