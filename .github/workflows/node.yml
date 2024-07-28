@@ -27,7 +27,7 @@ jobs:
     - name: Login to ACR
       uses: azure/docker-login@v1
       with:
-        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        login-server: devopschallenge.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
@@ -35,7 +35,7 @@ jobs:
       run: docker build -t node-app-welcome .
 
     - name: Tag Docker image
-      run: docker tag node-app-welcome:latest ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
+      run: docker tag node-app-welcome:latest devopschallenge.azurecr.io/node-app-welcome:latest
 
     - name: Push Docker image
-      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
+      run: docker push devopschallenge.azurecr.io/node-app-welcome:latest
