@@ -38,10 +38,7 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t node-app-welcome .
-
-    - name: Tag Docker image
-      run: docker tag node-app-welcome:latest devopschallenge.azurecr.io/node-app-welcome:latest
+      run: docker build -t devopschallenge.azurecr.io/node-app-welcome:latest .
 
     - name: Push Docker image
       run: docker push devopschallenge.azurecr.io/node-app-welcome:latest
