@@ -44,4 +44,7 @@ jobs:
       run: docker tag node-app-welcome:latest devopschallenge.azurecr.io/node-app-welcome:latest
 
     - name: Push Docker image
-      run: docker push devopschallenge.azurecr.io/node-app-welcome:latest
+      run: |
+        docker push devopschallenge.azurecr.io/node-app-welcome:latest
+        docker images
+    
