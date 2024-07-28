@@ -22,8 +22,14 @@ jobs:
       run: npm install
 
     - name: Run ESLint
-      run: npx eslint .
+      run: npx eslint . --format json --output-file eslint-report-artifact.json
     
+    - name: Upload ESLint report Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: eslint-report-artifact
+        path: eslint-report-artifact.json
+
     - name: Login to ACR
       uses: azure/docker-login@v1
       with:
