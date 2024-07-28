@@ -44,7 +44,12 @@ jobs:
       run: docker tag node-app-welcome:latest devopschallenge.azurecr.io/node-app-welcome:latest
 
     - name: Push Docker image
-      run: |
-        docker push devopschallenge.azurecr.io/node-app-welcome:latest
-        docker images
+      run: docker push devopschallenge.azurecr.io/node-app-welcome:latest
     
+    - name: Docker artifact
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: docker-image-artifact
+        path: node-app-welcome.tar
+        if-no-files-found: error
+        overwrite: true
