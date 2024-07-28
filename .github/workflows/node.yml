@@ -23,3 +23,15 @@ jobs:
 
     - name: Run ESLint
       run: npx eslint .
+    
+    - name: Build Docker image
+      run: docker build -t node-app-welcome .
+
+    - name: Log in to ACR
+      run: docker login ${{ secrets.ACR_LOGIN_SERVER }} -u "${{ secrets.ACR_USERNAME }}" --password-stdin
+
+    - name: Tag Docker image
+      run: docker tag node-app-welcome:latest ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
+
+    - name: Push Docker image
+      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
