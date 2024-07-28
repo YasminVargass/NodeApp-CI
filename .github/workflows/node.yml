@@ -39,6 +39,15 @@ jobs:
 
     - name: Build Docker image
       run: docker build -t devopschallenge.azurecr.io/node-app-welcome:latest .
+    
+    - name: Save Docker image as tar
+      run: docker save devopschallenge.azurecr.io/node-app-welcome:latest -o node-app-welcome.tar
+    
+    - name: Upload Docker image tar Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: node-app-welcome-image
+        path: node-app-welcome.tar
 
     - name: Push Docker image
       run: docker push devopschallenge.azurecr.io/node-app-welcome:latest
