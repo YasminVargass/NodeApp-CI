@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  pull-requests: read
 
 jobs:
   build:
@@ -29,19 +34,31 @@ jobs:
       with:
         name: eslint-report-artifact
         path: eslint-report-artifact.json
+    
+    - name: SonarQube Scan
+      uses: SonarSource/sonarcloud-github-action@v1.5
+      env:
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+            args: >
+              -Dsonar.projectKey=your_project_key
+              -Dsonar.organization=your_organization
+              -Dsonar.host.url=https://sonarcloud.io
+              -Dsonar.sources=.
+              -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
     - name: Login to ACR
       uses: azure/docker-login@v1
       with:
-        login-server: devopschallenge.azurecr.io
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t devopschallenge.azurecr.io/node-app-welcome:latest .
+      run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest .
     
     - name: Save Docker image as tar
-      run: docker save devopschallenge.azurecr.io/node-app-welcome:latest -o node-app-welcome.tar
+      run: docker save ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest -o node-app-welcome.tar
     
     - name: Upload Docker image tar Artifact
       uses: actions/upload-artifact@v2
@@ -50,5 +67,5 @@ jobs:
         path: node-app-welcome.tar
 
     - name: Push Docker image
-      run: docker push devopschallenge.azurecr.io/node-app-welcome:latest
+      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
   
