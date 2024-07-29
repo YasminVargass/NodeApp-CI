@@ -35,17 +35,17 @@ jobs:
         name: eslint-report-artifact
         path: eslint-report-artifact.json
     
-    - name: SonarQube Scan
-      uses: SonarSource/sonarcloud-github-action@v1.5
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.7
       env:
-         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
-            args: >
-              -Dsonar.projectKey=your_project_key
-              -Dsonar.organization=your_organization
-              -Dsonar.host.url=https://sonarcloud.io
-              -Dsonar.sources=.
-              -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+        args: >
+            -Dsonar.organization=yasminvargass
+            -Dsonar.projectKey=YasminVargass_NodeApp-CI
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.sources=.
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
     - name: Login to ACR
       uses: azure/docker-login@v1
