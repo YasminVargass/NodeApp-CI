@@ -49,6 +49,7 @@ jobs:
         args: >
             -Dsonar.organization=yasminvargass
             -Dsonar.projectKey=YasminVargass_NodeApp-CI
+            -X
             -Dsonar.sources=.
 
     - name: Login to ACR
