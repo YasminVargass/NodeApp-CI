@@ -11,22 +11,20 @@ permissions:
   pull-requests: read
 
 jobs:
-  composite:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Node.js Setup
-        uses: ./.github/actions/composite-setup-node
-        with:
-          node-version: '18'
   build:
-    needs: composite
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: npm install
 
     - name: Run ESLint
       run: npx eslint . --format json --output-file eslint-report-artifact.json
@@ -47,7 +45,6 @@ jobs:
             -Dsonar.projectKey=YasminVargass_NodeApp-CI
             -X
             -Dsonar.sources=.
-
     - name: Login to ACR
       uses: azure/docker-login@v1
       with:
@@ -69,4 +66,3 @@ jobs:
 
     - name: Push Docker image
       run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/node-app-welcome:latest
-  
