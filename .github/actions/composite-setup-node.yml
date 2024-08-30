@@ -1,0 +1,21 @@
+name: Node.js Setup
+description: A composite action to set up Node.js
+
+inputs:
+  node-version:
+    description: 'Node.js version'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install dependencies
+      run: npm install
