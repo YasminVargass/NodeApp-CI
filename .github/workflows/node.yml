@@ -14,7 +14,10 @@ jobs:
   composite:
     runs-on: ubuntu-latest
     steps:
-      - name: Node.js Setup and Linting
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Node.js Setup
         uses: ./.github/actions/composite-setup-node
         with:
           node-version: '18'
